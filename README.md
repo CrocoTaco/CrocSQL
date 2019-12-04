@@ -1,2 +1,1 @@
-# CrocSQL
-SQL for Crocs
+# PG-GUI
