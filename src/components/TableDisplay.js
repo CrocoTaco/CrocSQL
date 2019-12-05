@@ -1,3 +1,18 @@
+/**
+ * Summary: Displays table and creates popup to create new rows.
+ *
+ * Description:
+ *  TableDisplay
+ *    togglePopup()
+ *    render()
+ *     < CreatePopup />
+ *     < TableHeader />
+ *     Array of < Row />
+ *
+ * @file   ./src/components/TableDisplay.js
+ * @author ______
+ */
+
 import React from 'react';
 import Row from './Rows.js';
 import TableHeader from './TableHeader.js';
@@ -12,6 +27,9 @@ class TableDisplay extends React.Component {
     this.togglePopup = this.togglePopup.bind(this);
   }
 
+  /**
+   * Toggles create row interface.
+   */
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup,
@@ -41,6 +59,7 @@ class TableDisplay extends React.Component {
 
     return (
       <div className="flex">
+        <h2>{this.props.tableName}</h2>
         <button onClick={this.togglePopup}>Create Row</button>
         {this.state.showPopup ? (
           <CreatePopup

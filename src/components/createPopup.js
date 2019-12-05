@@ -1,5 +1,17 @@
+/**
+ * Summary: Creates a form and sends fetch to create new row in database.
+ *
+ * Description:
+ *  CreatePopup
+ *    onSubmit()
+ *    render()
+ *      < Form >
+ *
+ * @file   ./src/components/CreatePopup.js
+ * @author ______
+ */
+
 import React from 'react';
-import TableHeader from './TableHeader.js';
 
 class CreatePopup extends React.Component {
   constructor(props) {
