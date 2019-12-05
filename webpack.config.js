@@ -12,7 +12,7 @@ module.exports = {
     // contentBase: '/dist'
     publicPath: '/dist',
     compress: true,
-    port: 8000,
+    port: 8080,
     proxy: {
       '/server/': 'http://localhost:3000'
     }
