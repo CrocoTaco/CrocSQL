@@ -18,8 +18,12 @@ file.getData = (req, res, next) => {
 // Get table names middleware to display on dropdown menu after fetching database
 file.getTableNames = (req, res, next) => {
   const db = res.locals.pool;
-  // write code here
-  const queryString = "select tablename from pg_catalog.pg_tables where schemaname != 'pg_catalog' AND schemaname != 'information_scehma'";
+  
+
+const queryString = `select tablename
+from pg_catalog.pg_tables
+where schemaname = 'public';`
+
 
   db.query(queryString, (err, result) => {
     if (err) {
@@ -33,7 +37,7 @@ file.getTableNames = (req, res, next) => {
 // Update/Patch Middleware
 file.update = (req, res, next) => {
   const db = res.locals.pool;
-  // write code here
+  
   const { queryString } = req.body;
 
   db.query(queryString, (err, result) => {
@@ -48,7 +52,7 @@ file.update = (req, res, next) => {
 // Delete middleware
 file.delete = (req, res, next) => {
   const db = res.locals.pool;
-  // write code here
+  
   const { queryString } = req.body;
 
   db.query(queryString, (err, result) => {

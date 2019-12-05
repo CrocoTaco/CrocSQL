@@ -1,6 +1,16 @@
-const connectionPoint = {};
 const { Pool } = require('pg');
+const connectionPoint = {};
 
+/**
+ * Summary: Middleware that creates connection with user-input database via URI.
+ * 
+ * Description: Creates a new pool connection using user-input database URI (from the request body). Invoked every time user triggers an event that requires interaction with database.
+ * 
+ * @param {Object} req Request body
+ *  @param {Object} res Response body
+ * @param {Function} next Invokes next piece of middleware 
+
+ */
 connectionPoint.createConnection = (req, res, next) => {
   // Grab URI from POST request at input form
   const { uri } = req.body;
