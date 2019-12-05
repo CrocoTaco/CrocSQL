@@ -9,6 +9,7 @@ class CreatePopup extends React.Component {
   }
 
   onSubmit(event) {
+    //this method stops the default action of an element from happening. on a "Submit" button, prevent it from submitting a form.
     event.preventDefault();
     const data = new FormData(event.target);
     const getDataObj = {};
