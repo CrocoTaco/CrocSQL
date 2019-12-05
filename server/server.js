@@ -1,14 +1,15 @@
 const express = require('express');
+
 const app = express();
 const PORT = 3000;
 const path = require('path');
-const file = require('./controller')
-const connectionPoint = require('./connection.js').connectionPoint
 const bodyParser = require('body-parser');
+const file = require('./controller');
+const { connectionPoint } = require('./connection.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/dist',express.static(path.join(__dirname,'../dist')))
+app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
 
 // CHAOS FLOW
@@ -23,34 +24,22 @@ app.use('/dist',express.static(path.join(__dirname,'../dist')))
 //   return next();
 // });
 
-app.get('/', function (req, res) {
-    res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
-  })
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+});
 
 app.post('/server/tablenames',
-  connectionPoint.createConnection, file.getTableNames,(req,res) =>{
-  return res.status(200).json(res.locals.tableName);
-})
+  connectionPoint.createConnection, file.getTableNames, (req, res) => res.status(200).json(res.locals.tableName));
 
 app.post('/server/table',
-  connectionPoint.createConnection,file.getData, (req,res) =>{
-  return res.status(200).json(res.locals.info);
-})
+  connectionPoint.createConnection, file.getData, (req, res) => res.status(200).json(res.locals.info));
 
-app.post('/server/update', connectionPoint.createConnection, file.update, (req, res) => {
-  return res.status(200).json(res.locals.new)
-})
+app.post('/server/update', connectionPoint.createConnection, file.update, (req, res) => res.status(200).json(res.locals.new));
 
-app.post('/server/create', connectionPoint.createConnection, file.create, (req, res) => {
-  return res.status(200).json(res.locals.create)
-})
+app.post('/server/create', connectionPoint.createConnection, file.create, (req, res) => res.status(200).json(res.locals.create));
 
-app.delete('/server/delete', connectionPoint.createConnection, file.delete, (req, res) => {
-  return res.status(200).json(res.locals.delete)
-})
-  
-app.listen(PORT, ()=> {console.log(`Listening on Port ${PORT}`)})
+app.delete('/server/delete', connectionPoint.createConnection, file.delete, (req, res) => res.status(200).json(res.locals.delete));
+
+app.listen(PORT, () => { console.log(`Listening on Port ${PORT}`); });
 
 module.exports = app;
-
-
