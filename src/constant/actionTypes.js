@@ -2,4 +2,4 @@
 // Redux is not implemented yet, all methods used on react should have been reducers
 
 
-export default const UPDATE_TYPE = 'UPDATE_TYPE';
+export const UPDATE_TYPE = 'UPDATE_TYPE';
