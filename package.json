@@ -1,26 +1,31 @@
 {
-  "name": "PG-GUI",
+  "name": "CrocSQL",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js",
     "build": "webpack",
-    "both": "webpack-dev-server --mode development --open --hot & nodemon server/server.js"
+    "both": "concurrently \"webpack-dev-server --mode development --open --hot\" \"nodemon server/server.js\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PG-GUI/PG-GUI.git"
+    "url": "git+https://github.com/CrocoTaco/CrocSQL.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PG-GUI/PG-GUI/issues"
+    "url": "https://github.com/CrocoTaco/CrocSQL/issues"
   },
-  "homepage": "https://github.com/PG-GUI/PG-GUI#readme",
+  "homepage": "https://github.com/CrocoTaco/CrocSQL#readme",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^5.0.0",
     "path": "^0.12.7",
     "pg": "^7.14.0",
     "react": "^16.12.0",
