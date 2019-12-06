@@ -1,10 +1,19 @@
+/**
+ * @summary The connection file containing middleware that establishes a connection to the database
+ *
+ * @description Connection is established with the user-input database url 
+ *
+ * @file   ./server/connection.js
+ * @author ______, Tammy Tan, Joseph Corrado
+ */
+
 const { Pool } = require('pg');
 const connectionPoint = {};
 
 /**
  * @summary Middleware that creates connection with user-input database via URI.
  * 
- * @description Creates a new pool connection using user-input database URI (from the request body). Invoked every time user triggers an event that requires interaction with database.
+ * @description Creates a new pool connection using user-input database URI (from the request body). This middleware is invoked every time user triggers an event that requires interaction with database.
  * 
  * @requires pg
  * 
