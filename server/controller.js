@@ -1,4 +1,12 @@
-// MIDDLEWARES
+/**
+ * @summary The controller file holding all middlewares handling database queries
+ *
+ * @description The following middleware queries the database and retrieves/updates/deletes/inserts data which relies on the connection established in connection.js
+ *
+ * @file   ./server/controller.js
+ * @author ______, Tammy Tan, Joseph Corrado
+ */
+
 const file = {};
 
 

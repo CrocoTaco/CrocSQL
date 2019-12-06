@@ -1,9 +1,11 @@
 html {
-  background: #f5f5f5;
+  background: linear-gradient(90deg, #f8ff00 0%, #3ad59f 100%);
+    color: rgb(37, 37, 37);
+    font-family: 'Alatsi', sans-serif;
 }
 
 #root {
-  color: #3366cc;
+  /* color: white; */
   display: flex;
   justify-content: center;
 }
