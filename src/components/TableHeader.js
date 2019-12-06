@@ -1,7 +1,7 @@
 /**
- * Summary: Displays table and creates popup to create new rows.
+ * @Summary Displays table and creates popup to create new rows.
  *
- * Description:
+ * @Description
  *  TableHeader
  *    handleEvent()
  *    render()
@@ -23,10 +23,8 @@ class TableHeader extends Component {
   }
 
   /**
-   *
-   * @param event
-   *
    * Gets ordered data from database when event is fired.
+   * @param event
    */
   handleEvent(event) {
     const queryString = `SELECT * FROM ${this.props.tableName} ORDER BY ${event.target.placeholder}`;

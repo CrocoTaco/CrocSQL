@@ -1,29 +1,31 @@
-// This component creates each cell for the column names
+/**
+ * @Summary Creates a cell with background color and an event handler.
+ *
+ * @Description
+ *  HeaderCells()
+ *     < Input />
+ *       handleEvent()
+ *
+ * @file   ./src/components/HeaderCells.js
+ * @author ______
+ */
 
-import React, { Component } from 'react';
+import React from 'react';
 
-class HeaderCell extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  render() {
-    const tableHeaderStyle = {
-      background: '#d6e0f5',
-      fontSize: '12px',
-    };
-    return (
-      <input
-        placeholder={this.props.data}
-        type="text"
-        name={this.props.column}
-        onClick={this.props.handleEvent}
-        style={tableHeaderStyle}
-      />
-    );
-  }
+function HeaderCell(props) {
+  const tableHeaderStyle = {
+    background: '#d6e0f5',
+    fontSize: '12px',
+  };
+  return (
+    <input
+      placeholder={props.data}
+      type="text"
+      name={props.column}
+      onClick={props.handleEvent}
+      style={tableHeaderStyle}
+    />
+  );
 }
 
 export default HeaderCell;

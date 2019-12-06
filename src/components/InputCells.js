@@ -1,7 +1,7 @@
 /**
- * Summary: Displays the a row/column value.
+ * @Summary Displays the a row/column value.
  *
- * Description:
+ * @Description
  *  InputCells()
  *     < Input />
  *       onEnter()
