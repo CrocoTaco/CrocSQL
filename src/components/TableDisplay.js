@@ -1,7 +1,7 @@
 /**
- * Summary: Displays table and creates popup to create new rows.
+ * @Summary Displays table and creates popup to create new rows.
  *
- * Description:
+ * @Description
  *  TableDisplay
  *    togglePopup()
  *    render()

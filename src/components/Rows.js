@@ -1,7 +1,7 @@
 /**
- * Summary: Each Row is an array of InputCells.
+ * @Summary Each Row is an array of InputCells.
  *
- * Description:
+ * @Description
  *  Row
  *    onEnter()
  *    render()
@@ -24,13 +24,14 @@ class Row extends Component {
   }
 
   /**
-   *
-   * @param event
-   *
    * Checks what key is pressed when call is selected
+   *
    *  '?' - Only show rows with that cell value
+   *
    *  '/' - Only show rows without that cell value
+   *
    *  'Enter' - Changes that cell to new value
+   * @param event
    */
   onEnter(event) {
     const PK = Object.keys(this.props.data)[0];
