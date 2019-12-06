@@ -1,5 +1,15 @@
-// This component creates the row containing each cell with column names
-
+/**
+ * @Summary Displays table and creates popup to create new rows.
+ *
+ * @Description
+ *  TableHeader
+ *    handleEvent()
+ *    render()
+ *     Array of < HeaderCells />
+ *
+ * @file   ./src/components/TableDisplay.js
+ * @author ______
+ */
 
 import React, { Component } from 'react';
 import HeaderCell from './HeaderCells.js';
@@ -12,6 +22,10 @@ class TableHeader extends Component {
     this.handleEvent = this.handleEvent.bind(this);
   }
 
+  /**
+   * Gets ordered data from database when event is fired.
+   * @param event
+   */
   handleEvent(event) {
     const queryString = `SELECT * FROM ${this.props.tableName} ORDER BY ${event.target.placeholder}`;
     console.log(queryString);
