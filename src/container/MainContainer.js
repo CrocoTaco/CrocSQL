@@ -1,7 +1,7 @@
 /**
- * Summary: The main parent component for the app.
+ * @Summary The main parent component for the app.
  *
- * Description:
+ * @Description
  *  MainContainer
  *    state{}
  *    reRender()
@@ -39,11 +39,9 @@ class MainContainer extends Component {
   }
 
   /**
-   *
-   * @param {String} newString Optional Query: Default -> 'select * from {state.currentTable}'
-   *
    * Passed down to components as prop.
    *
+   * @param {String} newString Optional Query: Default -> 'select * from {state.currentTable}'
    */
   reRender(newString) {
     const tableName = this.state.currentTable;
@@ -76,9 +74,7 @@ class MainContainer extends Component {
 
   /**
    * Grab row's _id from user input
-   *
    * Sends query to delete that row from database
-   *
    * Updates data by sending fetch to database (reRender())
    */
   deleteRow() {
@@ -97,14 +93,11 @@ class MainContainer extends Component {
   }
 
   /**
+   * Grabs uri from user input.
+   * Sets state to contain list of table names from SQL database.
+   * Calls callback after fetch resolves.
    *
    * @param {Function} [callback] Optional
-   *
-   * Grabs uri from user input.
-   *
-   * Sets state to contain list of table names from SQL database.
-   *
-   * Calls callback after fetch resolves.
    */
   getTableNames(callback = () => {}) {
     // updates state with user inputed uri
@@ -133,11 +126,7 @@ class MainContainer extends Component {
       .then(() => callback());
   }
 
-  /**
-   * Gets user's selected table.
-   *
-   * Gets table data from server and updates state.
-   */
+  /** Gets user's selected table then gets table data from server and updates state. */
   getTable() {
     // Grabs uri from state
     // Grab tablename from user input

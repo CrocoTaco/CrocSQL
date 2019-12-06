@@ -1,7 +1,7 @@
 /**
- * Summary: Creates a form and sends fetch to create new row in database.
+ * @Summary Creates a form and sends fetch to create new row in database.
  *
- * Description:
+ * @Description
  *  CreatePopup
  *    onSubmit()
  *    render()
@@ -20,7 +20,13 @@ class CreatePopup extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * Sends request to server to add row to current table.
+   * Fetches new data from database.
+   * @param {*} event 
+   */
   onSubmit(event) {
+    //this method stops the default action of an element from happening. on a "Submit" button, prevent it from submitting a form.
     event.preventDefault();
     const data = new FormData(event.target);
     const getDataObj = {};
