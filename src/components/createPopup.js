@@ -1,5 +1,17 @@
+/**
+ * @Summary Creates a form and sends fetch to create new row in database.
+ *
+ * @Description
+ *  CreatePopup
+ *    onSubmit()
+ *    render()
+ *      < Form >
+ *
+ * @file   ./src/components/CreatePopup.js
+ * @author ______
+ */
+
 import React from 'react';
-import TableHeader from './TableHeader.js';
 
 class CreatePopup extends React.Component {
   constructor(props) {
@@ -8,13 +20,19 @@ class CreatePopup extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * Sends request to server to add row to current table.
+   * Fetches new data from database.
+   * @param {*} event 
+   */
   onSubmit(event) {
+    //this method stops the default action of an element from happening. on a "Submit" button, prevent it from submitting a form.
     event.preventDefault();
     const data = new FormData(event.target);
     const getDataObj = {};
 
     for (let i = 1; i < this.props.keys.length; i += 1) {
-      let inputData = data.get(this.props.keys[i]);
+      const inputData = data.get(this.props.keys[i]);
 
       if (inputData !== '') {
         getDataObj[this.props.keys[i]] = inputData;
@@ -24,8 +42,8 @@ class CreatePopup extends React.Component {
     let columnNames = '';
     let columnValues = '';
 
-    for (let keys in getDataObj) {
-      columnNames += keys + ', ';
+    for (const keys in getDataObj) {
+      columnNames += `${keys}, `;
       columnValues += `'${getDataObj[keys]}'` + ', ';
     }
 
@@ -37,8 +55,8 @@ class CreatePopup extends React.Component {
 
     console.log(columnValues, columnNames);
 
-    let queryString = `INSERT INTO ${this.props.tableName} (${columnNames}) values (${columnValues})`;
-    const uri = this.props.uri;
+    const queryString = `INSERT INTO ${this.props.tableName} (${columnNames}) values (${columnValues})`;
+    const { uri } = this.props;
 
     console.log('THIS IS QUERYSTRNG', uri, queryString);
 
@@ -46,9 +64,9 @@ class CreatePopup extends React.Component {
       method: 'POST',
       body: JSON.stringify({ uri, queryString }),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(data => {
+        'Content-Type': 'application/json',
+      },
+    }).then((data) => {
       console.log('post request on submit has completed');
       this.props.reRender();
     });
@@ -61,12 +79,12 @@ class CreatePopup extends React.Component {
         <input
           type="text"
           tname={this.props.tableName}
-          key={i + '_inputBoxes'}
+          key={`${i}_inputBoxes`}
           uri={this.props.uri}
           id={this.props.keys[i]}
           name={this.props.keys[i]}
           placeholder={this.props.keys[i]}
-        />
+        />,
       );
     }
 

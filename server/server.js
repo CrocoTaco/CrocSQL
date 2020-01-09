@@ -1,56 +1,63 @@
+/**
+ * @summary Handles actions for all routes 
+ *
+ * @description Sequences middleware for each route and handles both route-specific and global errors
+ *
+ * @file   ./server/server.js
+ * @author ______, Tammy Tan, Joseph Corrado
+ */
+
 const express = require('express');
 const app = express();
-const PORT = 3000;
+
 const path = require('path');
-const file = require('./controller')
-const connectionPoint = require('./connection.js').connectionPoint
 const bodyParser = require('body-parser');
+const file = require('./controller');
+const { connectionPoint } = require('./connection.js');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+const PORT = 3000;
+
+//Parsing request body from JSON object into JS object format
 app.use(bodyParser.json());
-app.use('/dist',express.static(path.join(__dirname,'../dist')))
 
+//Upon receiving a get request to '/' path, server sends back index.html and status code 200
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+});
 
-// CHAOS FLOW
-// app.use((req, res, next) => {
-//   console.log(
-//     `***************************************************************************************
-//     CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
-//       req.url
-//     }, BODY: ${JSON.stringify(req.body)}
-//     ***************************************************************************************`
-//   );
-//   return next();
-// });
-
-app.get('/', function (req, res) {
-    res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
-  })
-
+//Upon receiving a post request to '/server/tablenames' path, iterate through the two middleware functions which create a connection to the database and retrieves the table names. Send data via a JSON object and a status code of 200 to the getTableNames and re-render function in Main Container component
 app.post('/server/tablenames',
-  connectionPoint.createConnection, file.getTableNames,(req,res) =>{
-  return res.status(200).json(res.locals.tableName);
-})
+  connectionPoint.createConnection, file.getTableNames, (req, res) => res.status(200).json(res.locals.tableName));
 
+// Upon receiving a post request to '/server/table' path, iterate through the two middleware functions which create a connection to the database and retrieves the tables. Send data via a JSON object and a status code of 200 to the getTable  and re-render function in Main Container component
 app.post('/server/table',
-  connectionPoint.createConnection,file.getData, (req,res) =>{
-  return res.status(200).json(res.locals.info);
+  connectionPoint.createConnection, file.getData, (req, res) => res.status(200).json(res.locals.info));
+
+// Upon receiving a post request to '/server/update' path, iterate through the two middleware functions which create a connection to the database and replaces the Row value with the user-input value (both in the Row Component and the database)  
+app.post('/server/update', connectionPoint.createConnection, file.update, (req, res) => res.status(200).json(res.locals.new));
+
+// Upon receiving a post request to '/server/create' path, iterate through the two middleware functions which create a connection to the database and creates a new row of data in the database via user-input data entered into the CreatePopup Component (this is not a popup, it's more of a hidden component) 
+app.post('/server/create', connectionPoint.createConnection, file.create, (req, res) => res.status(200).json(res.locals.create));
+
+// Upon receiving a delete request to '/server/delete' path, iterate through the two middleware functions which create a connection to the database and deletes a  row of data in the database via user-input data entered into the Main Container
+app.delete('/server/delete', connectionPoint.createConnection, file.delete, (req, res) => res.status(200).json(res.locals.delete));
+
+
+// Defined a catch-all route handler for any requests to an unknown route
+app.use((req, res) => res.sendStatus(404));
+
+// Defined a global error handler that catches middleware errors and updates the error message key on the default error object
+app.use ((err, req, res, next) => {
+  const defaultError = {
+    log: "Express error handler caught unknown middleware error",
+    status: 400,
+    message: { err: "An error occurred" }
+  }
+  const errObj = Object.assign({},defaultError,err)
+  return res.status(errObj.status).json(errObj.message)
 })
 
-app.post('/server/update', connectionPoint.createConnection, file.update, (req, res) => {
-  return res.status(200).json(res.locals.new)
-})
-
-app.post('/server/create', connectionPoint.createConnection, file.create, (req, res) => {
-  return res.status(200).json(res.locals.create)
-})
-
-app.delete('/server/delete', connectionPoint.createConnection, file.delete, (req, res) => {
-  return res.status(200).json(res.locals.delete)
-})
-  
-app.listen(PORT, ()=> {console.log(`Listening on Port ${PORT}`)})
+//The App listens on port indicated on line 9
+app.listen(PORT, () => { console.log(`Listening on Port ${PORT}`); });
 
 module.exports = app;
-
-

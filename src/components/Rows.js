@@ -1,3 +1,16 @@
+/**
+ * @Summary Each Row is an array of InputCells.
+ *
+ * @Description
+ *  Row
+ *    onEnter()
+ *    render()
+ *     Array of < InputCells />
+ *
+ * @file   ./src/components/Rows.js
+ * @author ______
+ */
+
 import React, { Component } from 'react';
 import InputCell from './InputCells.js';
 
@@ -10,52 +23,54 @@ class Row extends Component {
     this.onEnter = this.onEnter.bind(this);
   }
 
+  /**
+   * Checks what key is pressed when call is selected
+   *
+   *  '?' - Only show rows with that cell value
+   *
+   *  '/' - Only show rows without that cell value
+   *
+   *  'Enter' - Changes that cell to new value
+   * @param event
+   */
   onEnter(event) {
-    const PK = Object.keys(this.props.data)[0]
-    const reRender = this.props.reRender;
-    const uri = this.props.uri;
-    const tableName = this.props.tableName
-    
-    if (event.key === '?') {
-      const columnName = event.target.name;
-      const query = event.target.placeholder;
-      const filterString = `SELECT * FROM ${tableName} WHERE ${columnName} = '${query}'`
+    const PK = Object.keys(this.props.data)[0];
+    const { reRender, uri, tableName } = this.props;
 
-      reRender(filterString)
-      
-      
-    }
+    const columnName = event.target.name;
+    const query = event.target.placeholder;
+    let filterString = `SELECT * FROM ${tableName} WHERE ${columnName} `;
 
-    if (event.key === '/') {
-      const columnName = event.target.name;
-      const query = event.target.placeholder;
-      const filterString = `SELECT * FROM ${tableName} WHERE ${columnName} != '${query}'`
+    switch (event.key) {
+      case '?':
+        filterString += `= '${query}'`;
+        reRender(filterString);
+        break;
+      case '/':
+        filterString += `!= '${query}'`;
+        reRender(filterString);
+        break;
+      case 'Enter':
+        const newValue = event.target.value;
+        const PKValue = this.props.data[PK];
+        let queryString = `UPDATE ${tableName} SET ${columnName} = `;
 
-      reRender(filterString)
-      
-    }
-
-    if (event.key === 'Enter') {
-     
-      const newValue = event.target.value;
-      const PKValue = this.props.data[PK];
-      const columnName = event.target.name;
-      let queryString;
-      
-      if (isNaN(newValue)) {
-        queryString = `UPDATE ${tableName} SET ${columnName} = '${newValue}' WHERE ${PK} = ${PKValue}`;
-      } else {
-        queryString = `UPDATE ${tableName} SET ${columnName} = ${Number(newValue)} WHERE ${PK} = ${PKValue}`;
+        if (isNaN(newValue)) {
+          queryString += `'${newValue}' WHERE ${PK} = ${PKValue}`;
+        } else {
+          queryString += `${Number(newValue)} WHERE ${PK} = ${PKValue}`;
         }
 
-
-      fetch('/server/update', {
-        method: 'POST',
-        body: JSON.stringify({ uri, queryString }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-          }).then(data => reRender())
+        fetch('/server/update', {
+          method: 'POST',
+          body: JSON.stringify({ uri, queryString }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((data) => reRender());
+        break;
+      default:
+        break;
     }
   }
 
@@ -65,11 +80,11 @@ class Row extends Component {
     columns.forEach((val, index) => {
       rowsArr.push(
         <InputCell
-          key={index + '_inputCell'}
+          key={`${index}_inputCell`}
           data={val[1]}
           column={val[0]}
           onEnter={this.onEnter}
-        />
+        />,
       );
     });
 
